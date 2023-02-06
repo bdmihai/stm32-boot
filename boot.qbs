@@ -57,8 +57,7 @@ Product {
     }
 
     files: [
-        'utils.s',
-        'runtime.c'
+        'utils.s'
     ]
 
     Export {

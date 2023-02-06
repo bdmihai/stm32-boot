@@ -3,16 +3,13 @@ OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
 ENTRY(Reset_Handler)
 
 SECTIONS {
-    /* Put startup code into FLASH, ALWAYS DO THIS FIRST */
-    .isr_vector : {
-        . = ALIGN(4);
+    /* put ISR vector into FLASH, ALWAYS DO THIS FIRST */
+    .isr_vector : ALIGN(4) {
         KEEP(*(.isr_vector));
-        . = ALIGN(4);
-    } > FLASH
+    } >FLASH
 
-    /* Put program code and other data into FLASH */
-    .text : {
-        . = ALIGN(4);
+    /* put program code and other data into FLASH */
+    .text : ALIGN(4) {
         __text_start = .;
 
         *(.text)
@@ -24,54 +21,46 @@ SECTIONS {
         KEEP(*(.init))
         KEEP(*(.fini))
 
-        . = ALIGN(4);
         /* preinit data */
         PROVIDE_HIDDEN (__preinit_array_start = .);
         KEEP(*(SORT(.preinit_array.*)))
         KEEP(*(.preinit_array))
         PROVIDE_HIDDEN (__preinit_array_end = .);
 
-        . = ALIGN(4);
         /* init data */
         PROVIDE_HIDDEN (__init_array_start = .);
         KEEP(*(SORT(.init_array.*)))
         KEEP(*(.init_array))
         PROVIDE_HIDDEN (__init_array_end = .);
 
-        . = ALIGN(4);
         /* finit data */
         PROVIDE_HIDDEN (__fini_array_start = .);
         *(SORT(.fini_array.*))
         *(.fini_array)
         PROVIDE_HIDDEN (__fini_array_end = .);
 
-        . = ALIGN(4);
         __text_end = .;
-    } > FLASH
+    } >FLASH
 
-    /* Put constant (read-only) data into FLASH */
-    .rodata : {
-        . = ALIGN(4);
+    /*put constant (read-only) data into FLASH */
+    .rodata : ALIGN(4) {
         __rodata_start = .;
 
         *(.rodata)
         *(.rodata*)
 
-        . = ALIGN(4);
         __rodata_end = .;
-    } > FLASH
+    } >FLASH
 
     .ARM.extab : {
         *(.ARM.extab* .gnu.linkonce.armextab.*)
-    } > FLASH
+    } >FLASH
 
     .ARM : {
         __exidx_start = .;
         *(.ARM.exidx*)
         __exidx_end = .;
-    } > FLASH
-
-    __data_flash_start = LOADADDR(.data);
+    } >FLASH
 
     .data : {
         . = ALIGN(4);
@@ -82,7 +71,8 @@ SECTIONS {
 
         . = ALIGN(4);
         __data_end = .;
-    } > RAM AT> FLASH
+    } >RAM AT >FLASH
+    __data_flash_start = LOADADDR(.data);
 
     .bss : {
         . = ALIGN(4);
@@ -91,24 +81,23 @@ SECTIONS {
 
         *(.bss)
         *(.bss*)
-        *(COMMON)
 
         . = ALIGN(4);
         __bss_end = .;
         __bss_end__ = __bss_end;
-    } > RAM
+    } >RAM
 
-    /* HEAP for dymamic alocation in freeRTOS */
+    /* heap for dymamic alocation */
     .heap (NOLOAD) : {
         . = ALIGN(4);
         __heap_start = .;
 
-        *(.heap)
-        *(.heap*)
+        KEEP(*(.heap*))
+        . = . + 32*1024;
 
         . = ALIGN(4);
         __heap_end = .;
-    } > RAM
+    } >RAM
 
     /* Stack will fill the rest of the RAM */
     .stack : {
@@ -120,9 +109,7 @@ SECTIONS {
 
         . = ALIGN(4);
         __stack_end = .;
-    } > RAM
-
-    __cmmdata_flash_start = LOADADDR(.ccmram);
+    } >RAM
 
     .ccmram : {
         . = ALIGN(4);
@@ -133,7 +120,8 @@ SECTIONS {
 
         . = ALIGN(4);
         __ccmdata_end = .;
-    } > CCMRAM AT> FLASH
+    } >CCMRAM AT >FLASH
+    __cmmdata_flash_start = LOADADDR(.ccmram);
 
     /DISCARD/ : {
         libc.a(*)
