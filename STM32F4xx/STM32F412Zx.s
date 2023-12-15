@@ -375,7 +375,7 @@ vector_table:
 .weak QUADSPI_IRQHandler
 .thumb_set QUADSPI_IRQHandler, Default_Handler
 
-.weakFMPI2C1_EV_IRQHandler
+.weak FMPI2C1_EV_IRQHandler
 .thumb_set FMPI2C1_EV_IRQHandler, Default_Handler
 
 .weak FMPI2C1_ER_IRQHandler
