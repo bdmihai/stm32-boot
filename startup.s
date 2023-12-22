@@ -9,7 +9,7 @@
  * uninitialized variables will be set to 0. These addresses are set in the
  * linker file.
  */
-.word __data_flash_start
+.word __data_source
 .word __data_start
 .word __data_end
 .word __bss_start
@@ -28,7 +28,7 @@ Reset_Handler:
     movs r0, #0
     ldr  r1, = __data_start
     ldr  r2, = __data_end
-    ldr  r3, = __data_flash_start
+    ldr  r3, = __data_source
     b    LoopCopyData
 
 CopyData:
