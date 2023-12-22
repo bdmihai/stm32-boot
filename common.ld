@@ -67,10 +67,21 @@ SECTIONS {
         __exidx_end = .;
     } >FLASH
 
+    /* runtime vector table shall be in RAM */
+    .ram_isr_vector : ALIGN(4) {
+        __ram_isr_vector_start = .;
+
+        . = . + SIZEOF(.isr_vector);
+        
+        . = ALIGN(4);
+        __ram_isr_vector_end = .;
+    } >RAM
+
     /* put initialized data in RAM with the source located in flash */
     .data : ALIGN(4) {
         __data_start = .;
 
+        *(.time_critical*)
         *(.data)
         *(.data*)
 
@@ -106,9 +117,8 @@ SECTIONS {
         PROVIDE ( end = . ); /* needed by libc */
         __stack_start = .;
         
-        . = . + LENGTH(RAM) - SIZEOF(.data) - SIZEOF(.bss) - SIZEOF(.heap);
+        . = . + LENGTH(RAM) - (__stack_start - __ram_isr_vector_start);
 
-        . = ALIGN(4);
         __stack_end = .;
     } >RAM
 
