@@ -1,9 +1,8 @@
 .include "startup.s"
 
 .section .isr_vector, "a", %progbits
-.type vector_table, %object
-.size vector_table, .-vector_table
-vector_table:
+.type g_pfnVectors, %object
+g_pfnVectors:
     .word __end_stack
     .word Reset_Handler
     .word NMI_Handler

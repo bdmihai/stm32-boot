@@ -5,8 +5,13 @@ ENTRY(Reset_Handler)
 SECTIONS {
     /* put ISR vector first into FLASH */
     .isr_vector : ALIGN(4) {
+        __isr_vector_start = .;
+
         KEEP(*(.isr_vector));
-    } >FLASH
+        
+        __isr_vector_end = .;
+    } >RAM AT >FLASH
+    __isr_vector_source = LOADADDR(.isr_vector);
 
     /* put program code and other data into FLASH */
     .text : ALIGN(4) {
@@ -42,7 +47,6 @@ SECTIONS {
         *(.fini_array)
         PROVIDE_HIDDEN (__fini_array_end = .);
 
-        . = ALIGN(4);
         __text_end = .;
     } >FLASH
 
@@ -53,7 +57,6 @@ SECTIONS {
         *(.rodata)
         *(.rodata*)
 
-        . = ALIGN(4);
         __rodata_end = .;
     } >FLASH
 
@@ -67,25 +70,15 @@ SECTIONS {
         __exidx_end = .;
     } >FLASH
 
-    /* runtime vector table shall be in RAM */
-    .ram_isr_vector : ALIGN(4) {
-        __ram_isr_vector_start = .;
-
-        . = . + SIZEOF(.isr_vector);
-        
-        . = ALIGN(4);
-        __ram_isr_vector_end = .;
-    } >RAM
-
     /* put initialized data in RAM with the source located in flash */
     .data : ALIGN(4) {
         __data_start = .;
 
         *(.time_critical*)
+
         *(.data)
         *(.data*)
 
-        . = ALIGN(4);
         __data_end = .;
     } >RAM AT >FLASH
     __data_source = LOADADDR(.data);
@@ -97,7 +90,6 @@ SECTIONS {
         *(.bss)
         *(.bss*)
 
-        . = ALIGN(4);
         __bss_end = .;
     } >RAM
 
@@ -108,7 +100,6 @@ SECTIONS {
         KEEP(*(.heap*))
         . = . + 32*1024;
 
-        . = ALIGN(4);
         __heap_end = .;
     } >RAM
 
@@ -117,7 +108,7 @@ SECTIONS {
         PROVIDE ( end = . ); /* needed by libc */
         __stack_start = .;
         
-        . = . + LENGTH(RAM) - (__stack_start - __ram_isr_vector_start);
+        . = . + LENGTH(RAM) - (__stack_start - __isr_vector_start);
 
         __stack_end = .;
     } >RAM
@@ -128,7 +119,6 @@ SECTIONS {
         *(.ccmram)
         *(.ccmram*)
 
-        . = ALIGN(4);
         __ccmdata_end = .;
     } >CCMRAM AT >FLASH
     __cmmdata_source = LOADADDR(.ccmram);
