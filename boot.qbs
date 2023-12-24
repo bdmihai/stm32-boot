@@ -33,27 +33,27 @@ Product {
 
     Group {
         condition: stm32.targetMcu == 'STM32F103C8'
-        files: ['STM32F1xx/STM32F103xB.s', 'STM32F1xx/STM32F103x8.ld']
+        files: ['STM32F1/STM32F103xB.s', 'STM32F1/STM32F103x8.ld']
     }
 
     Group {
         condition: stm32.targetMcu == 'STM32F103RC'
-        files: ['STM32F1xx/STM32F103xE.s', 'STM32F1xx/STM32F103xC.ld']
+        files: ['STM32F1/STM32F103xE.s', 'STM32F1/STM32F103xC.ld']
     }
 
     Group {
         condition: stm32.targetMcu == 'STM32F401CC'
-        files: ['STM32F4xx/STM32F401xC.s', 'STM32F4xx/STM32F401xC.ld']
+        files: ['STM32F4/STM32F401xC.s', 'STM32F4/STM32F401xC.ld']
     }
 
     Group {
         condition: stm32.targetMcu == 'STM32F411CE'
-        files: ['STM32F4xx/STM32F411xE.s', 'STM32F4xx/STM32F411xE.ld']
+        files: ['STM32F4/STM32F411xE.s', 'STM32F4/STM32F411xE.ld']
     }
 
     Group {
         condition: stm32.targetMcu == 'STM32F412ZG'
-        files: ['STM32F4xx/STM32F412Zx.s', 'STM32F4xx/STM32F412xG.ld']
+        files: ['STM32F4/STM32F412Zx.s', 'STM32F4/STM32F412xG.ld']
     }
 
     files: [
