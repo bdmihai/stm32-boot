@@ -39,6 +39,9 @@
 .section .text.Reset_Handler, "ax", %progbits
 .type Reset_Handler, %function
 Reset_Handler:
+    /* set stack pointer */
+    ldr   sp, =__stack_end
+
     /* copy defined sections from FLASH to RAM */
     adr r4, data_copy_table
 1:
