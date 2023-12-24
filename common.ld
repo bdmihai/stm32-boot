@@ -98,7 +98,7 @@ SECTIONS {
         __heap_start = .;
 
         KEEP(*(.heap*))
-        . = . + 32*1024;
+        . = . + 4*1024;
 
         __heap_end = .;
     } >RAM
