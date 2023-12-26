@@ -101,9 +101,9 @@ data_init:
     .word __data_source
     .word __data_start
     .word __data_end
-    //.word __ccmdata_source
-    //.word __ccmdata_start
-    //.word __ccmdata_end
+    .word __ccmdata_source
+    .word __ccmdata_start
+    .word __ccmdata_end
     .word 0 // null terminator
 
 /**

@@ -121,7 +121,7 @@ SECTIONS {
 
         __ccmdata_end = .;
     } >CCMRAM AT >FLASH
-    __cmmdata_source = LOADADDR(.ccmram);
+    __ccmdata_source = LOADADDR(.ccmram);
 
     /DISCARD/ : {
         libc.a(*)
