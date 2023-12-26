@@ -47,6 +47,11 @@ Product {
     }
 
     Group {
+        condition: stm32.targetMcu == 'STM32F407VG'
+        files: ['STM32F4/STM32F407xx.s', 'STM32F4/STM32F407xG.ld']
+    }
+
+    Group {
         condition: stm32.targetMcu == 'STM32F411CE'
         files: ['STM32F4/STM32F411xE.s', 'STM32F4/STM32F411xE.ld']
     }

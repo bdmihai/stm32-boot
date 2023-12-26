@@ -4,7 +4,7 @@
 .type  g_pfnVectors, %object
 .size  g_pfnVectors, .-g_pfnVectors
 g_pfnVectors:
-    .word __end_stack
+    .word __stack_end
     .word Reset_Handler
     .word NMI_Handler
     .word HardFault_Handler
