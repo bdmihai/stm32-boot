@@ -61,6 +61,11 @@ Product {
         files: ['STM32F4/STM32F412Zx.s', 'STM32F4/STM32F412xG.ld']
     }
 
+    Group {
+        condition: stm32.targetMcu == 'STM32H7B0VB'
+        files: ['STM32H7/STM32H7B0xx.s', 'STM32H7/STM32H7B0xB.ld']
+    }
+
     files: [
         'utils.s'
     ]
