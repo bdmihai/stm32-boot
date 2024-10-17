@@ -119,17 +119,6 @@ SECTIONS {
         __stack_end = .;
     } >RAM
 
-    .ccmram : ALIGN(4) {
-        __ccmdata_start = .;
-
-        *(.ccmram)
-        *(.ccmram*)
-
-        . = ALIGN(4);
-        __ccmdata_end = .;
-    } >CCMRAM AT >FLASH
-    __ccmdata_source = LOADADDR(.ccmram);
-
     /DISCARD/ : {
         libc.a(*)
         libm.a(*)

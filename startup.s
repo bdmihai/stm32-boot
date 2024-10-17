@@ -58,33 +58,6 @@ Reset_Handler:
     ldr r1, =exit
     blx r1
 
-/**
- * These are the addresses for the initialized (data) variables. The initialized 
- * variables will be copied from FLASH to RAM. These addresses are set in the
- * linker file.
- */
-copy_data_table:
-    .word __isr_vector_source
-    .word __isr_vector_start
-    .word __isr_vector_end
-    .word __data_source
-    .word __data_start
-    .word __data_end
-    .word __ccmdata_source
-    .word __ccmdata_start
-    .word __ccmdata_end
-    .word 0 // null terminator
-
-/**
- * These are the addresses for the uninitialized (bss) variables. The
- * uninitialized variables will be set to 0. These addresses are set in the
- * linker file.
- */
-zero_data_table:
-    .word __bss_start
-    .word __bss_end
-    .word 0 // null terminator
-
 .size Reset_Handler, .-Reset_Handler
 
 /**

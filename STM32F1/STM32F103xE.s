@@ -1,7 +1,28 @@
 .include "startup.s"
 
-// 0x01E0: Boot in RAM mode on STM32F10x High Density devices.
-.equ BootRAM, 0xF1E0F85F
+/**
+ * These are the addresses for the initialized (data) variables. The initialized 
+ * variables will be copied from FLASH to RAM. These addresses are set in the
+ * linker file.
+ */
+copy_data_table:
+    .word __isr_vector_source
+    .word __isr_vector_start
+    .word __isr_vector_end
+    .word __data_source
+    .word __data_start
+    .word __data_end
+    .word 0 // null terminator
+
+/**
+ * These are the addresses for the uninitialized (bss) variables. The
+ * uninitialized variables will be set to 0. These addresses are set in the
+ * linker file.
+ */
+zero_data_table:
+    .word __bss_start
+    .word __bss_end
+    .word 0 // null terminator
 
 .section .isr_vector, "a", %progbits
 .type g_pfnVectors, %object
