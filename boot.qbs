@@ -1,6 +1,6 @@
 /*_____________________________________________________________________________
  │                                                                            |
- │ COPYRIGHT (C) 2023 Mihai Baneu                                             |
+ │ COPYRIGHT (C) 2024 Mihai Baneu                                             |
  │                                                                            |
  | Permission is hereby  granted,  free of charge,  to any person obtaining a |
  | copy of this software and associated documentation files (the "Software"), |
@@ -21,10 +21,12 @@
  | THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                 |
  |____________________________________________________________________________|
  |                                                                            |
- |  Author: Mihai Baneu                           Last modified: 05.Feb.2023  |
+ |  Author: Mihai Baneu                           Last modified: 17.Oct.2024  |
  |                                                                            |
  |___________________________________________________________________________*/
  
+import qbs.FileInfo
+
 Product {
     name: 'boot'
     type: 'lib'
@@ -72,6 +74,9 @@ Product {
 
     Export {
         Depends { name: 'stm32' }
-        stm32.libraryPaths: [ exportingProduct.destinationDirectory, exportingProduct.sourceDirectory ]
+        stm32.libraryPaths: [ 
+            exportingProduct.destinationDirectory, 
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, stm32.targetSeries)
+        ]
     }
 }

@@ -1,6 +1,6 @@
 /*_____________________________________________________________________________
  │                                                                            |
- │ COPYRIGHT (C) 2023 Mihai Baneu                                             |
+ │ COPYRIGHT (C) 2024 Mihai Baneu                                             |
  │                                                                            |
  | Permission is hereby  granted,  free of charge,  to any person obtaining a |
  | copy of this software and associated documentation files (the "Software"), |
@@ -21,7 +21,7 @@
  | THE USE OR OTHER DEALINGS IN THE SOFTWARE.                                 |
  |____________________________________________________________________________|
  |                                                                            |
- |  Author: Mihai Baneu                           Last modified: 23.Dec.2023  |
+ |  Author: Mihai Baneu                           Last modified: 17.Oct.2024  |
  |                                                                            |
  |___________________________________________________________________________*/
 
@@ -63,9 +63,9 @@ Reset_Handler:
     b 1b
 2:
 
-    /* call runtime_init, main and exit funcions */
+    /* call init, main and exit funcions */
 platform_entry:
-    ldr r1, =runtime_init
+    ldr r1, =init
     blx r1
     ldr r1, =main
     blx r1

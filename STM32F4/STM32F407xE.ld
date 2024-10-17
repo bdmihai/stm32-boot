@@ -5,4 +5,4 @@ MEMORY {
     CCMRAM (rwx) : ORIGIN = 0x10000000, LENGTH = 64k
 }
 
-INCLUDE common.ld
+INCLUDE STM32F4xxxx.ld
