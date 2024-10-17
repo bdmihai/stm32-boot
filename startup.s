@@ -43,28 +43,14 @@ Reset_Handler:
     ldr   sp, =__stack_end
 
     /* copy defined sections from FLASH to RAM */
-    adr r4, data_copy_table
-1:
-    ldmia r4!, {r1-r3}
-    cmp r1, #0
-    beq 2f
-    bl data_copy
-    b 1b
-2:
-
+    adr r0, copy_data_table
+    bl copy_data
+    
     /* fill uninitialized variables with zeros */
-    adr r3, data_init_table
-    movs r0, #0
-1:
-    ldmia r3!, {r1-r2}
-    cmp r1, #0
-    beq 2f
-    bl data_init
-    b 1b
-2:
+    adr r0, zero_data_table
+    bl zero_data
 
     /* call init, main and exit funcions */
-platform_entry:
     ldr r1, =init
     blx r1
     ldr r1, =main
@@ -72,29 +58,12 @@ platform_entry:
     ldr r1, =exit
     blx r1
 
-data_copy_loop:
-    ldm r1!, {r0}
-    stm r2!, {r0}
-
-data_copy:
-    cmp r2, r3
-    blo data_copy_loop
-    bx lr
-
-data_init_loop:
-    str r0, [r1], #4
-
-data_init:
-    cmp r1, r2
-    blo data_init_loop
-    bx lr
-
 /**
  * These are the addresses for the initialized (data) variables. The initialized 
  * variables will be copied from FLASH to RAM. These addresses are set in the
  * linker file.
  */
- data_copy_table:
+copy_data_table:
     .word __isr_vector_source
     .word __isr_vector_start
     .word __isr_vector_end
@@ -111,13 +80,12 @@ data_init:
  * uninitialized variables will be set to 0. These addresses are set in the
  * linker file.
  */
-data_init_table:
+zero_data_table:
     .word __bss_start
     .word __bss_end
     .word 0 // null terminator
 
 .size Reset_Handler, .-Reset_Handler
-
 
 /**
  * This code gets called when the processor receives an unexpected interrupt.

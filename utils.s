@@ -50,4 +50,50 @@ exit:
     bkpt #0
     b 1b
 
+/*-----------------------------------------------------------*/
+/*                          zero_data                        */
+/*-----------------------------------------------------------*/
+.section .text.zero_data
+.global zero_data
+.type zero_data,%function
+zero_data:
+    movs r3, #0
+1:
+    ldmia r0!, {r1-r2}
+    cmp r1, #0
+    beq 4f
+2:
+    cmp r1, r2
+    blo 3f
+    b 1b
+3:
+    str r3, [r1], #4
+    b 2b
+4:
+    bx lr
+
+/*-----------------------------------------------------------*/
+/*                          copy_data                        */
+/*-----------------------------------------------------------*/
+.section .text.copy_data
+.global copy_data
+.type copy_data,%function
+copy_data:
+    push {r4}
+1:
+    ldmia r0!, {r1-r3}
+    cmp r1, #0
+    beq 4f
+2:
+    cmp r2, r3
+    blo 3f
+    b 1b
+3:
+    ldm r1!, {r4}
+    stm r2!, {r4}
+    b 2b
+4:
+    pop {r4}
+    bx lr
+
 .end
