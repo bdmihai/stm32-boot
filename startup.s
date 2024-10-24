@@ -40,15 +40,15 @@
 .type Reset_Handler, %function
 Reset_Handler:
     /* set stack pointer */
-    ldr   sp, =__stack_end
+    ldr sp, =__stack_end
+
+    /* fill uninitialized variables with zeros */
+    adr r0, zero_data_table
+    bl zero_data
 
     /* copy defined sections from FLASH to RAM */
     adr r0, copy_data_table
     bl copy_data
-    
-    /* fill uninitialized variables with zeros */
-    adr r0, zero_data_table
-    bl zero_data
 
     /* call init, main and exit funcions */
     ldr r1, =init

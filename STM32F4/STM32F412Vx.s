@@ -1,10 +1,12 @@
 .include "startup.s"
 
-/**
+/******************************************************************************
  * These are the addresses for the initialized (data) variables. The initialized 
  * variables will be copied from FLASH to RAM. These addresses are set in the
  * linker file.
- */
+******************************************************************************/
+.section .text.Reset_Handler
+.align 4
 copy_data_table:
     .word __isr_vector_source
     .word __isr_vector_start
@@ -14,11 +16,13 @@ copy_data_table:
     .word __data_end
     .word 0 // null terminator
 
-/**
+/******************************************************************************
  * These are the addresses for the uninitialized (bss) variables. The
  * uninitialized variables will be set to 0. These addresses are set in the
  * linker file.
- */
+******************************************************************************/
+.section .text.Reset_Handler
+.align 4
 zero_data_table:
     .word __bss_start
     .word __bss_end
