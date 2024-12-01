@@ -67,7 +67,8 @@ zero_data:
     blo 3f
     b 1b
 3:
-    str r3, [r1], #4
+    str r3, [r1]
+    adds r1, #4
     b 2b
 4:
     bx lr

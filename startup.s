@@ -40,7 +40,8 @@
 .type Reset_Handler, %function
 Reset_Handler:
     /* set stack pointer */
-    ldr sp, =__stack_end
+    ldr r0, =__stack_end
+    msr msp, r0
 
     /* fill uninitialized variables with zeros */
     adr r0, zero_data_table

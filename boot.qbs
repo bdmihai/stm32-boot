@@ -68,6 +68,11 @@ Product {
         files: ['STM32H7/STM32H7B0xx.s', 'STM32H7/STM32H7B0xB.ld']
     }
 
+    Group {
+        condition: stm32.targetMcu == 'STM32G0B1CB'
+        files: ['STM32G0/STM32G0B1Cx.s', 'STM32G0/STM32G0B1xB.ld']
+    }
+
     files: [
         'utils.s'
     ]
