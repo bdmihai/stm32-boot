@@ -43,6 +43,10 @@ Reset_Handler:
     ldr r0, =__stack_end
     msr msp, r0
 
+    /* early initialization */
+    ldr r1, =init_early
+    blx r1
+
     /* fill uninitialized variables with zeros */
     adr r0, zero_data_table
     bl zero_data
